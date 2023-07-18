@@ -1,3 +1,4 @@
+
 async function sendReq(cityName) {
     const serverUrl = 'http://api.openweathermap.org/data/2.5/weather';
     const apiKey = 'f660a2fb1e4bad108d6160b7f58c555f';
@@ -18,3 +19,4 @@ async function onSearchClick() {
     document.querySelector('.left-weather-cloud').innerText = data.weather[0].main;
     document.querySelector('.left-weather-city').innerText = data.name;
 }
+
