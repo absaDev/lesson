@@ -26,12 +26,9 @@ const updateCityData = async (cityName) => {
 
 const renderActiveCityWeather = () => {
     if (activeCityData) {
-        document.querySelector('.left-weather-degrees').innerText =
-            activeCityData.main.humidity;
-        document.querySelector('.left-weather-cloud').innerText =
-            activeCityData.weather[0].main;
-        document.querySelector('.left-weather-city').innerText =
-            activeCityata.name;
+        document.querySelector('.left-weather-degrees').innerText = activeCityData.main.humidity;
+        document.querySelector('.left-weather-cloud').innerText = activeCityData.weather[0].main;
+        document.querySelector('.left-weather-city').innerText = activeCityData.name;
     }
 };
 
