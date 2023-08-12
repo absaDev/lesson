@@ -1,3 +1,5 @@
+const cities = [];
+let activeCityData = null;
 
 async function sendReq(cityName) {
     const serverUrl = 'http://api.openweathermap.org/data/2.5/weather';
@@ -6,17 +8,54 @@ async function sendReq(cityName) {
 
     const res = await fetch(url);
     const data = await res.json();
-    
+
     return data;
 }
 
-async function onSearchClick() {
+function onSearchClick() {
     const cityName = document.querySelector('.input').value;
-    const data = await sendReq(cityName);
-
-    // обновление dom
-    document.querySelector('.left-weather-degrees').innerText = data.main.humidity;
-    document.querySelector('.left-weather-cloud').innerText = data.weather[0].main;
-    document.querySelector('.left-weather-city').innerText = data.name;
+    document.querySelector('.input').value = '';
+    updateCityData(cityName);
+    addCity(cityName);
 }
 
+const updateCityData = async (cityName) => {
+    activeCityData = await sendReq(cityName);
+    renderActiveCityWeather();
+};
+
+const renderActiveCityWeather = () => {
+    if (activeCityData) {
+        document.querySelector('.left-weather-degrees').innerText =
+            activeCityData.main.humidity;
+        document.querySelector('.left-weather-cloud').innerText =
+            activeCityData.weather[0].main;
+        document.querySelector('.left-weather-city').innerText =
+            activeCityata.name;
+    }
+};
+
+const addCity = (cityName) => {
+    if (cities.includes(cityName) == false) {
+        cities.push(cityName);
+        renderFavorites();
+    }
+};
+
+const renderFavorites = () => {
+    document.querySelectorAll('.city-list li').forEach((el) => {
+        el.remove();
+    });
+
+    const ul = document.querySelector('.city-list ul');
+
+    cities.forEach((city) => {
+        const li = document.createElement('li');
+        li.innerHTML = city;
+        li.onclick = () => updateCityData(city);
+
+        ul.appendChild(li);
+    });
+};
+
+renderFavorites();
